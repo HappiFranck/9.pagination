@@ -53,6 +53,7 @@ class Router
     {
         $uri = $this->router->generateUri($name, $params);
         if (!empty($queryParams)) {
+            //On spécifit la forme de retour d'URL
             return $uri . '?' . http_build_query($queryParams);
         }
         return $uri;

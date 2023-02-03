@@ -6,18 +6,21 @@
   <h1>Bienvenue sur le blog</h1>
 
   <div class="row">
-
+  {# On recupere les articles que l'on groupe par quatre ( batch(4)) a chaque nouvelle ligne#}
     {% for row in posts | batch(4) %}
       <div class="card-deck">
         {% for post in row %}
           <div class="card">
             <div class="card-header">
+            {#Le titre de l'article#}
               <h2><a href="{{ path('blog.show', {slug: post.slug, id: post.id}) }}">
                   {{ post.name }}
                 </a></h2>
             </div>
+            {#Le texte de chaque article#}
             <div class="card-block">
               <p class="card-text">
+              {#On affiche les extraits des articles grace au filtre (excerpt) cree#}
                 {{ post.content | excerpt | nl2br }}
               </p>
               <p class="text-muted">{{ post.created_at | ago }}</p>

@@ -17,7 +17,13 @@ class PagerFantaExtension extends \Twig_Extension
     {
         $this->router = $router;
     }
-
+    /** Renvoit le nombre de fonction
+     *
+     * @return array \Twig_SimpleFunction :
+     *  @param 'paginate' la nom de la fonction qui va etre utiliser dans index.twig
+     * @param  [$this, 'paginate'] : représente la fonction de rappel
+     * @param  array ['is_safe' => ['html'] : Représente les caractères de sortie HTML de la methode paginate()
+     */
     public function getFunctions()
     {
         return [
@@ -25,14 +31,25 @@ class PagerFantaExtension extends \Twig_Extension
         ];
     }
 
+    /** extension twig
+     * @param Pagerfanta $paginatedResults: une instance de Pagerfanta
+     * @param string $route : représent le nom de la route
+     * @return string : qui représente du code HTML
+     * @param array $queryArgs :
+     */
+
     public function paginate(Pagerfanta $paginatedResults, string $route, array $queryArgs = []): string
     {
         $view = new TwitterBootstrap4View();
-        return $view->render($paginatedResults, function (int $page) use ($route, $queryArgs) {
-            if ($page > 1) {
-                $queryArgs['p'] = $page;
+        return $view->render(
+            $paginatedResults,
+            //C'est une fonction qui prend en parametre la page et retourne la bonne route
+            function (int $page) use ($route, $queryArgs) {
+                if ($page > 1) {
+                    $queryArgs['p'] = $page;
+                }
+                return $this->router->generateUri($route, [], $queryArgs);
             }
-            return $this->router->generateUri($route, [], $queryArgs);
-        });
+        );
     }
 }

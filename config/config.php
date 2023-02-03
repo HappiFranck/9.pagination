@@ -9,13 +9,15 @@ use Framework\Twig\{
 
 return [
     'database.host' => 'localhost',
-    'database.username' => 'root',
-    'database.password' => 'root',
-    'database.name' => 'monsupersite',
+    'database.username' => 'admin',
+    'database.password' => 'admin',
+    'database.name' => 'poo',
     'views.path' => dirname(__DIR__) . '/views',
+    //On injecte les classes d'extension définit
     'twig.extensions' => [
       \DI\get(RouterTwigExtension::class),
       \DI\get(PagerFantaExtension::class),
+      //On injecte la classe TextExtension
       \DI\get(TextExtension::class),
       \DI\get(TimeExtension::class)
     ],

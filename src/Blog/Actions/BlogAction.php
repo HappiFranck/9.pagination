@@ -1,12 +1,12 @@
 <?php
 namespace App\Blog\Actions;
 
-use App\Blog\Table\PostTable;
-use Framework\Actions\RouterAwareAction;
-use Framework\Renderer\RendererInterface;
 use Framework\Router;
+use App\Blog\Table\PostTable;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use Framework\Actions\RouterAwareAction;
+use Framework\Renderer\RendererInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BlogAction
@@ -43,9 +43,17 @@ class BlogAction
         return $this->index($request);
     }
 
+    /**
+     *
+     */
+
     public function index(Request $request): string
     {
+        //On recupere les parametres de la requete
         $params = $request->getQueryParams();
+        //12 représente le nombre d'enregistrement à utiliser
+        // $params['p'] ?? 1 : on recupere la clé de pagination qui représente le numéro de page
+        // visible dans l'URL par la lettre p si il est vide par defaut sa val est 1
         $posts = $this->postTable->findPaginated(12, $params['p'] ?? 1);
 
         return $this->renderer->render('@blog/index', compact('posts'));

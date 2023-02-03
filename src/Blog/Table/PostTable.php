@@ -10,6 +10,7 @@ class PostTable
 {
 
     /**
+     * recupere l'instance de PDO
      * @var \PDO
      */
     private $pdo;
@@ -21,7 +22,7 @@ class PostTable
 
     /**
      * Pagine les article
-     *
+     *@param  int $currentPage: la page courante
      * @param int $perPage
      * @return Pagerfanta
      */
@@ -34,6 +35,7 @@ class PostTable
             Post::class
         );
         return (new Pagerfanta($query))
+        //Le nombre de résultat par page
             ->setMaxPerPage($perPage)
             ->setCurrentPage($currentPage);
     }
